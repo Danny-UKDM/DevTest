@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using DevTest.Models;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,6 +25,8 @@ namespace DevTest
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddSingleton(_config);
+
+			services.AddDbContext<MemberContext>();
 
 			services.AddMvc();
 		}
