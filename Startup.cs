@@ -7,9 +7,15 @@ namespace DevTest
 {
 	public class Startup
 	{
-		public Startup(IConfiguration configuration)
+		private IConfigurationRoot _config;
+
+		public Startup(IHostingEnvironment env)
 		{
-			Configuration = configuration;
+			var builder = new ConfigurationBuilder()
+				.SetBasePath(env.ContentRootPath)
+				.AddJsonFile("appsettings.json");
+
+			_config = builder.Build();
 		}
 
 		public IConfiguration Configuration { get; }
@@ -17,6 +23,8 @@ namespace DevTest
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
+			services.AddSingleton(_config);
+
 			services.AddMvc();
 		}
 

@@ -18,7 +18,7 @@ namespace DevTest.Models
 		{
 			base.OnConfiguring(optionsBuilder);
 
-			optionsBuilder.UseSqlServer("");
+			optionsBuilder.UseSqlServer(_config.GetConnectionString("MemberContextConnection"));
 		}
 	}
 }
