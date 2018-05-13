@@ -36,7 +36,11 @@ namespace DevTest
 			services.AddDbContext<MemberContext>();
 			services.AddScoped<IMemberRepository, MemberRepository>();
 
-			services.AddMvc();
+			services.AddMvc()
+				.AddJsonOptions(config =>
+			{
+				config.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+			});
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
