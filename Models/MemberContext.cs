@@ -5,7 +5,7 @@ namespace DevTest.Models
 {
 	public class MemberContext : DbContext 
 	{
-		private IConfigurationRoot _config;
+		private readonly IConfigurationRoot _config;
 
 		public MemberContext(IConfigurationRoot config, DbContextOptions options) : base(options)
 		{

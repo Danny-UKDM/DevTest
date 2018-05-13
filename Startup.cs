@@ -8,7 +8,7 @@ namespace DevTest
 {
 	public class Startup
 	{
-		private IConfigurationRoot _config;
+		private readonly IConfigurationRoot _config;
 
 		public Startup(IHostingEnvironment env)
 		{
