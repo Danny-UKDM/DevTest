@@ -29,6 +29,8 @@ namespace DevTest
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
+			services.AddLogging();
+
 			services.AddSingleton(_config);
 
 			services.AddDbContext<MemberContext>();
@@ -38,15 +40,16 @@ namespace DevTest
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-		public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+		public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory factory)
 		{
 			if (env.IsDevelopment())
 			{
 				app.UseDeveloperExceptionPage();
+				factory.AddDebug(LogLevel.Information);
 			}
 			else
 			{
-				app.UseExceptionHandler("/Home/Error");
+				factory.AddDebug(LogLevel.Error);
 			}
 
 			Mapper.Initialize(config =>
