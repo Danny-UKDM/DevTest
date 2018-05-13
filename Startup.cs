@@ -1,8 +1,13 @@
-﻿using DevTest.Models;
+﻿using AutoMapper;
+using DevTest.Models;
+using DevTest.ViewModels;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Serialization;
 
 namespace DevTest
 {
@@ -43,6 +48,11 @@ namespace DevTest
 			{
 				app.UseExceptionHandler("/Home/Error");
 			}
+
+			Mapper.Initialize(config =>
+			{
+				config.CreateMap<MemberViewModel, Member>().ReverseMap();
+			});
 
 			app.UseStaticFiles();
 
