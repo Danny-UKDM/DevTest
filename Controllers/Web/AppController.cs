@@ -4,7 +4,7 @@ using DevTest.Models;
 
 namespace DevTest.Controllers
 {
-	public class HomeController : Controller
+	public class AppController : Controller
 	{
 		public IActionResult Index()
 		{

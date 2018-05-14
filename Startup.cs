@@ -77,7 +77,7 @@ namespace DevTest
 				config.MapRoute(
 					name: "Default",
 					template: "{controller}/{action}/{id?}",
-					defaults: new { controller = "Home", action = "Index" }
+					defaults: new { controller = "App", action = "Index" }
 					);
 			});
 		}
