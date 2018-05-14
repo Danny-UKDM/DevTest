@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 namespace DevTest.Models
 {
-	public class MemberContext : DbContext 
+	public class MemberContext : IdentityDbContext<Member> 
 	{
 		private readonly IConfigurationRoot _config;
 

@@ -1,12 +1,8 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
 
 namespace DevTest.Models
 {
-	public class Member
+	public class Member : IdentityUser
 	{
-		public int Id { get; set; }
-		public string Email { get; set; }
-		public string Password { get; set; }
-		public DateTime DateCreated { get; set; }
 	}
 }

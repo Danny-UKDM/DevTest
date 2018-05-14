@@ -41,6 +41,13 @@ namespace DevTest
 			{
 				config.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 			});
+
+			services.AddIdentity<Member, IdentityUser>(config =>
+			{
+				config.User.RequireUniqueEmail = true;
+				config.Password.RequiredLength = 8;
+			})
+			.AddEntityFrameworkStores<MemberContext>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,18 +63,22 @@ namespace DevTest
 				factory.AddDebug(LogLevel.Error);
 			}
 
+			app.UseStaticFiles();
+
+			app.UseAuthentication();
+
 			Mapper.Initialize(config =>
 			{
 				config.CreateMap<MemberViewModel, Member>().ReverseMap();
 			});
 
-			app.UseStaticFiles();
-
-			app.UseMvc(routes =>
+			app.UseMvc(config =>
 			{
-				routes.MapRoute(
-					name: "default",
-					template: "{controller=Home}/{action=Index}/{id?}");
+				config.MapRoute(
+					name: "Default",
+					template: "{controller}/{action}/{id?}",
+					defaults: new { controller = "Home", action = "Index" }
+					);
 			});
 		}
 	}
