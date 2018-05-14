@@ -42,7 +42,7 @@ namespace DevTest
 				config.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 			});
 
-			services.AddIdentity<Member, IdentityUser>(config =>
+			services.AddIdentity<Member, IdentityRole>(config =>
 			{
 				config.User.RequireUniqueEmail = true;
 				config.Password.RequiredLength = 8;
