@@ -11,9 +11,10 @@ using System;
 namespace DevTest.Migrations
 {
     [DbContext(typeof(MemberContext))]
-    partial class MemberContextModelSnapshot : ModelSnapshot
+    [Migration("20180514191852_IdentityMember")]
+    partial class IdentityMember
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
