@@ -1,0 +1,14 @@
+﻿@model DevTest.ViewModels.MemberViewModel
+@{
+	ViewData["Title"] = "Success";
+}
+
+<div class="row">
+	<div class="text-center">
+		<div class="col-md-3 col-md-offset-4">
+			<h1>Success!</h1>
+			<p>Successfully created @ViewData.Model.Email</p>
+			<input type="button" value="Do Another!" class="btn btn-success" onclick="location.href='@Url.Action("Index","App")'" />
+		</div>
+	</div>
+</div>
