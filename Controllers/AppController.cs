@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using DevTest.Models;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
@@ -28,13 +27,18 @@ namespace DevTest.Controllers
 			return View();
 		}
 
-		public IActionResult Error()
+		public IActionResult Success()
 		{
-			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+			return View();
 		}
 
-		[HttpPost("api/members")]
-		public async Task<IActionResult> Post([FromBody]MemberViewModel member)
+		public IActionResult Error()
+		{
+			return View();
+		}
+
+		[HttpPost("")]
+		public async Task<IActionResult> Post([FromForm]MemberViewModel member)
 		{
 			try
 			{
@@ -50,8 +54,19 @@ namespace DevTest.Controllers
 						var result = await _userManager.CreateAsync(newMember, password);
 
 						if (result.Succeeded)
-							return Created($"api/members", Mapper.Map<MemberViewModel>(member));
+							return View("Success", member);
 
+
+						foreach (var prop in result.Errors)
+						{
+							ModelState.AddModelError("Error", prop.Description);
+						}
+
+
+					}
+					else
+					{
+						ModelState.AddModelError("Error", "Email already exists");
 					}
 				}
 			}
@@ -60,7 +75,11 @@ namespace DevTest.Controllers
 				_logger.LogError($"Failed to save new Member: {0}", ex);
 			}
 
-			return BadRequest("Failed to save new Member");
+			return View("Error", new ErrorViewModel()
+			{
+				Email = member.Email,
+				Message = ModelState.ValidationState.ToString()
+			});
 		}
 	}
 }
