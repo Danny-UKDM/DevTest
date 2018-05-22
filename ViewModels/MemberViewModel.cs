@@ -6,10 +6,11 @@ namespace DevTest.ViewModels
 	public class MemberViewModel
 	{
 		[Required]
-		[EmailAddress]
+		[EmailAddress (ErrorMessage = "Not a valid email address")]
 		public string Email { get; set; }
 
 		[Required]
+		[MinLength(8, ErrorMessage = "Password must be at least 8 characters")]
 		public string Password { get; set; }
 
 		public DateTime DateCreated { get; set; } = DateTime.Now;
