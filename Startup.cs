@@ -3,7 +3,6 @@ using DevTest.Models;
 using DevTest.ViewModels;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -41,16 +40,6 @@ namespace DevTest
 			{
 				config.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 			});
-
-			services.AddIdentity<Member, IdentityRole>(config =>
-			{
-				config.User.RequireUniqueEmail = true;
-				config.Password.RequiredLength = 8;
-				config.Password.RequireNonAlphanumeric = false;
-				config.Password.RequireUppercase = false;
-				config.Password.RequireDigit = false;
-			})
-			.AddEntityFrameworkStores<MemberContext>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -67,8 +56,6 @@ namespace DevTest
 			}
 
 			app.UseStaticFiles();
-
-			app.UseAuthentication();
 
 			Mapper.Initialize(config =>
 			{

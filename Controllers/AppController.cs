@@ -4,7 +4,6 @@ using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using DevTest.ViewModels;
 using AutoMapper;
-using Microsoft.AspNetCore.Identity;
 using System;
 
 namespace DevTest.Controllers
@@ -13,13 +12,11 @@ namespace DevTest.Controllers
 	{
 		private readonly IMemberRepository _repository;
 		private readonly ILogger<AppController> _logger;
-		private readonly UserManager<Member> _userManager;
 
-		public AppController(IMemberRepository repository, ILogger<AppController> logger, UserManager<Member> userManager)
+		public AppController(IMemberRepository repository, ILogger<AppController> logger)
 		{
 			_repository = repository;
 			_logger = logger;
-			_userManager = userManager;
 		}
 
 		public IActionResult Index()
@@ -44,6 +41,9 @@ namespace DevTest.Controllers
 			{
 				if (ModelState.IsValid)
 				{
+					// TODO: Save to database here with ADO.NET flavour. 
+
+					/*
 					if (await _userManager.FindByEmailAsync(member.Email) == null)
 					{
 						var newMember = Mapper.Map<Member>(member);
@@ -68,6 +68,7 @@ namespace DevTest.Controllers
 					{
 						ModelState.AddModelError("Error", "Email already exists");
 					}
+					*/
 				}
 			}
 			catch (Exception ex)
