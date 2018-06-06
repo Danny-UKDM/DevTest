@@ -21,7 +21,7 @@ CREATE DATABASE Members;
 GO
 USE Members;
 GO
-Create table Users(    
+CREATE TABLE Users(    
     Id int IDENTITY(1,1) PRIMARY KEY,    
     Email nvarchar(256) NULL,    
     Password nvarchar(450) NULL
