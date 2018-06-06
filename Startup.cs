@@ -32,8 +32,7 @@ namespace DevTest
 
 			services.AddSingleton(_config);
 
-			services.AddDbContext<MemberContext>();
-			services.AddScoped<IMemberRepository, MemberRepository>();
+			services.AddScoped<IMemberContext ,MemberContext>();
 
 			services.AddMvc()
 				.AddJsonOptions(config =>
