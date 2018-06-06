@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using DevTest.Models;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
 using DevTest.ViewModels;
 using AutoMapper;
 using System;
@@ -10,12 +9,12 @@ namespace DevTest.Controllers
 {
 	public class AppController : Controller
 	{
-		private readonly IMemberRepository _repository;
+		private readonly IMemberContext _context;
 		private readonly ILogger<AppController> _logger;
 
-		public AppController(IMemberRepository repository, ILogger<AppController> logger)
+		public AppController(IMemberContext context, ILogger<AppController> logger)
 		{
-			_repository = repository;
+			_context = context;
 			_logger = logger;
 		}
 
@@ -35,40 +34,23 @@ namespace DevTest.Controllers
 		}
 
 		[HttpPost("")]
-		public async Task<IActionResult> Post([FromForm]MemberViewModel member)
+		public IActionResult Post([FromForm]MemberViewModel member)
 		{
 			try
 			{
 				if (ModelState.IsValid)
 				{
-					// TODO: Save to database here with ADO.NET flavour. 
-
-					/*
-					if (await _userManager.FindByEmailAsync(member.Email) == null)
+					if (_context.CheckIfMemberExists(member.Email) == false)
 					{
 						var newMember = Mapper.Map<Member>(member);
-						newMember.UserName = newMember.Email;
+						_context.AddMember(newMember);
 
-						var password = member.Password;
-
-						var result = await _userManager.CreateAsync(newMember, password);
-
-						if (result.Succeeded)
-							return View("Success", member);
-
-
-						foreach (var prop in result.Errors)
-						{
-							ModelState.AddModelError("Error", prop.Description);
-						}
-
-
+						return View("Success", member);
 					}
 					else
 					{
 						ModelState.AddModelError("Error", "Email already exists");
 					}
-					*/
 				}
 			}
 			catch (Exception ex)
