@@ -14,19 +14,28 @@ Open the project in Visual Studio and rebuild.
 
 If you do not already have a local MSSQLLocalDB in your environment, create one with default settings.
 
-Open a shell of your choice at the root of the project and run the following command:
+Execute the following SQL command on your local MSSQLLocalDB:
 
-```shell
-dotnet ef database update
+```sql
+CREATE DATABASE Members;
+GO
+USE Members;
+GO
+Create table Users(    
+    Id int IDENTITY(1,1) PRIMARY KEY,    
+    Email nvarchar(256) NULL,    
+    Password nvarchar(450) NULL
+)
 ```
 
 The project is now ready and connected to your local database.
 
 ## Built With
 
-* [ASP.NET Core](https://docs.microsoft.com/en-us/aspnet/core/)
+* [ASP.NET Core 2.0](https://docs.microsoft.com/en-us/aspnet/core/)
+* [ADO.NET](https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/)
 * [Nuget](https://www.nuget.org/)
-* [Entity Framework Core](https://docs.microsoft.com/en-us/ef/core/)
+
 
 ## Authors
 
