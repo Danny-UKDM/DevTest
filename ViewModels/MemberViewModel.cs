@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace DevTest.ViewModels
 {
@@ -12,7 +11,5 @@ namespace DevTest.ViewModels
 		[Required]
 		[MinLength(8, ErrorMessage = "Password must be at least 8 characters")]
 		public string Password { get; set; }
-
-		public DateTime DateCreated { get; set; } = DateTime.Now;
 	}
 }
