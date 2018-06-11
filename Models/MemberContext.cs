@@ -17,13 +17,22 @@ namespace DevTest.Models
 			_config = config;
 		}
 
-		public void AddMember(Member member)
+		public bool AddMember(Member member)
 		{
-			string commandText = "INSERT into dbo.Users (Email, Password) VALUES (@Email, @Password)";
+			string commandText = @"
+			
+	
+if exists select 1 from dbo.Users where email = @email then
+	return 0
+else 
+	INSERT into dbo.Users (Email, Password) VALUES (@Email, @Password)
+	select 1
+end if		
+			
+			";
 			string passwordHash = HashPassword(member.Password);
 
-			//var email = new SqlParameter(SqlDbType);
-			//var password = new SqlParameter("@Password", passwordHash);
+			bool result = false;
 
 			using (var con = new SqlConnection(_config.GetConnectionString("MemberContextConnection")))
 			{
@@ -33,29 +42,11 @@ namespace DevTest.Models
 				cmd.Parameters.Add("@Password", SqlDbType.NVarChar, 450).Value = passwordHash;
 
 				con.Open();
-				cmd.ExecuteNonQuery();
-				con.Close();
-			}
-		}
-
-		public bool CheckIfMemberExists(string email)
-		{
-			string commandText = "SELECT * FROM dbo.Users WHERE Email = @Email";
-			var result = String.Empty;
-
-			using (var con = new SqlConnection(_config.GetConnectionString("MemberContextConnection")))
-			{
-				var cmd = new SqlCommand(commandText, con);
-
-				cmd.Parameters.AddWithValue("@Email", email);
-
-				con.Open();
-				result = Convert.ToString(cmd.ExecuteScalar());
-				cmd.Dispose();
+				 result = Convert.ToBoolean(cmd.ExecuteScalar());
 				con.Close();
 			}
 
-			return (result != String.Empty) ? true : false;
+			return result;
 		}
 
 		public string HashPassword(string password)

@@ -2,9 +2,7 @@
 {
 	public interface IMemberContext
 	{
-		void AddMember(Member member);
-
-		bool CheckIfMemberExists(string email);
+		bool AddMember(Member member);
 
 		string HashPassword(string password);
 	}

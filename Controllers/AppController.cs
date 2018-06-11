@@ -33,22 +33,17 @@ namespace DevTest.Controllers
 			return View();
 		}
 
-		[HttpPost("")]
+		[HttpPost]
 		public IActionResult Post([FromForm]MemberViewModel member)
 		{
 			try
 			{
 				if (ModelState.IsValid)
 				{
-					if (_context.CheckIfMemberExists(member.Email) == false)
-					{
-						var newMember = Mapper.Map<Member>(member);
-						_context.AddMember(newMember);
-
+					var newMember = Mapper.Map<Member>(member);
+					if(_context.AddMember(newMember)) {
 						return View("Success", member);
-					}
-					else
-					{
+					} else {
 						ModelState.AddModelError("Error", "Email already exists");
 					}
 				}
